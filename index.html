@@ -1,18 +1,71 @@
 <!doctype html>
 <html>
 	<head>
-		
+
+	<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 	</head>
 	<body>
 		<section id="login">
 		<!-- Sarah's login work goes here -->
+
+		<input id="username" />
+		<button id="pop"> Pop </button>
+		<button id="rock"> Rock </button>
+		<button id="indie"> Indie </button>
+		<button id="electric"> Electric </button>
+		<button id="country"> Country </button>
 			
 		</section>
 
 		<section id="chat">
 		<!-- Ornella's chat work goes here -->
+		 <div id="#popChatBox" class='disappear'>
+        	<div id="popMessages"></div>
+        	<div id="popChatBar">
+          		<input id="popchat-input" />
+          		<button id="popchat-send">Send</button>
+        	</div>
+      	</div>
+
+      	 <div id="#rockChatBox" class='disappear'>
+        	<div id="rockMessages"></div>
+        	<div id="rockChatBar">
+          		<input id="rockchat-input" />
+          		<button id="rockchat-send">Send</button>
+        	</div>
+      	</div>
+
+      	 <div id="#indieChatBox" class='disappear'>
+        	<div id="indieMessages"></div>
+        	<div id="indieChatBar">
+          		<input id="indiechat-input" />
+          		<button id="indiechat-send">Send</button>
+        	</div>
+      	</div>
+
+      	 <div id="#electricChatBox" class='disappear'>
+        	<div id="electricMessages"></div>
+        	<div id="electricChatBar">
+          		<input id="electricchat-input" />
+          		<button id="electricchat-send">Send</button>
+        	</div>
+      	</div>
+
+      	 <div id="#countryChatBox" class='disappear'>
+        	<div id="countryMessages"></div>
+        	<div id="countryChatBar">
+          		<input id="countrychat-input" />
+          		<button id="countrychat-send">Send</button>
+        	</div>
+      	</div>
 
 		</section>
 
 	</body>
+
+
+	<script src="js/chat.js"></script>
+
 </html>

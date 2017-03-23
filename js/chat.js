@@ -20,12 +20,12 @@
 firebase.initializeApp(config);
 
 
-var database = firebase.database()
-var popChatDatabase = firebase.database(/popchat)
-var rockChatDatabase = firebase.database(/rockchat)
-var indieChatDatabase = firebase.database(/indiechat)
-var electricChatDatabase = firebase.database(/electricchat)
-var countryChatDatabase = firebase.database(/countrychat)
+var database = firebase.database();
+var popChatDatabase = database.ref("/popchat");
+var rockChatDatabase = database.ref("/rockchat");
+var indieChatDatabase = database.ref("/indiechat");
+var electricChatDatabase = database.ref("/electricchat");
+var countryChatDatabase = database.ref("/countrychat");
 var username;
 var message;
 
@@ -36,7 +36,7 @@ $('#pop').on('click' ,function(){
 	$('#popChatBox').removeClass('disappear') //will show the pop chatbox
  	
  	if ($("#username").val() !== "") { // if the input is not empty, declare the username
-    	username = capitalize($("#username").val());
+    	username = $("#username").val();
     }
 
 });
@@ -46,7 +46,7 @@ $('#rock').on('click' ,function(){
 	$('#rockChatBox').removeClass('disappear') //will show the rock chatbox
 
 	if ($("#username").val() !== "") {  // if the input is not empty, declare the username
-    	username = capitalize($("#username").val());
+    	username = $("#username").val();
     }
 
 });
@@ -56,7 +56,7 @@ $('#indie').on('click' ,function(){
 	$('#indieChatBox').removeClass('disappear') //will show the indie chatbox
 
 	if ($("#username").val() !== "") {  // if the input is not empty, declare the username
-    	username = capitalize($("#username").val());
+    	username = $("#username").val();
     }
 
 });
@@ -66,7 +66,7 @@ $('#electric').on('click' ,function(){
 	$('#electricChatBox').removeClass('disappear') //will show the electric chatbox
 
 	if ($("#username").val() !== "") {  // if the input is not empty, declare the username
-    	username = capitalize($("#username").val());
+    	username = $("#username").val();
     }
 
 });
@@ -76,7 +76,7 @@ $('#country').on('click' ,function(){
 	$('#countryChatBox').removeClass('disappear') //will show the country chatbox
 
 	if ($("#username").val() !== "") {  // if the input is not empty, declare the username                   
-    	username = capitalize($("#username").val());
+    	username = $("#username").val();
     }
 
 });
@@ -279,3 +279,54 @@ $("#countrychat-input").keypress(function(enter) {
 
 
 });
+
+
+// append message part
+
+popChatDatabase.orderByChild("time").on("child_added", function(popsnapshot) {
+
+$("#popMessages").append("<p popsnapshot.val().name + : "> + popsnapshot.val().message + "</p>");
+
+$("#popMessages").scrollTop($("#popMessages")[0].scrollHeight);
+
+ });
+
+
+rockChatDatabase.orderByChild("time").on("child_added", function(rocksnapshot) {
+
+$("#rockMessages").append("<p rocksnapshot.val().name + : "> + rocksnapshot.val().message + "</p>");
+
+$("#rockMessages").scrollTop($("#rockMessages")[0].scrollHeight);
+
+ });
+
+
+
+indieChatDatabase.orderByChild("time").on("child_added", function(indiesnapshot) {
+
+$("#indieMessages").append("<p indiesnapshot.val().name + : "> + indiesnapshot.val().message + "</p>");
+
+$("#indieMessages").scrollTop($("#indieMessages")[0].scrollHeight);
+
+ });
+
+
+electricChatDatabase.orderByChild("time").on("child_added", function(electricsnapshot) {
+
+$("#electricMessages").append("<p electricsnapshot.val().name + : "> + electricsnapshot.val().message + "</p>");
+
+$("#electricMessages").scrollTop($("#electricMessages")[0].scrollHeight);
+
+ });
+
+
+countryChatDatabase.orderByChild("time").on("child_added", function(countrysnapshot) {
+
+$("#countryMessages").append("<p countrysnapshot.val().name + : "> + countrysnapshot.val().message + "</p>");
+
+$("#countryMessages").scrollTop($("#countryMessages")[0].scrollHeight);
+
+ });
+
+
+
