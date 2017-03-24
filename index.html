@@ -1,68 +1,78 @@
+
+
 <!doctype html>
 <html>
 	<head>
-
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
 	<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.js"></script>
+
 	</head>
 	<body>
-		<section id="login">
-		<!-- Sarah's login work goes here -->
+    <div class="container body">
 
-		<input id="username" />
-		<button id="pop"> Pop </button>
-		<button id="rock"> Rock </button>
-		<button id="indie"> Indie </button>
-		<button id="electric"> Electric </button>
-		<button id="country"> Country </button>
-			
-		</section>
+    <div class="container logo">
+    <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+    <img src="images/potato chips.jpg" class="logopic">
+    </div>
+    </div>
+    </div>
 
-		<section id="chat">
+    <div class="container loginandpickgenre">
+    <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+      <h3 class="panel-title" style="font-size: 25px">Login</h3>
+      </div>
+      <div class="panel-body">
+    <!--Patrick enters login form here-->
+      </div>
+      </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+      <h3 class="panel-title" style="font-size: 25px">Choose a Genre you want to hear!</h3>
+      </div>
+    <div class="panel-body">
+      <section id="login">
+    <!-- Sarah's login work goes here -->
+    <select class="form-control" id="username">
+    <option id="pop" value="pop">Pop</option>
+    <option id="rock" value="rock">Rock</option>
+    <option id="indie" value="indie">Indie</option>
+    <option id="electric" value="electric">Electric</option>
+    <option id="country" value="country">Country</option>
+    </select>
+    	<button id="enter"> Enter </button>
+      </section>
+    </div>
+    </div>
+    </div>
+ 	  </div>
+    </div>
+
+		<div class="container chatbox">
+    <section id="chat">
 		<!-- Ornella's chat work goes here -->
-		 <div id="#popChatBox" class='disappear'>
-        	<div id="popMessages"></div>
-        	<div id="popChatBar">
-          		<input id="popchat-input" />
-          		<button id="popchat-send">Send</button>
+		 <div id="#ChatBox">
+        	<div id="Messages"></div>
+          <br>
+        	<div id="ChatBar">
+          		<input id="chat-input" />
+          		<button id="chat-send">Send</button>
         	</div>
       	</div>
-
-      	 <div id="#rockChatBox" class='disappear'>
-        	<div id="rockMessages"></div>
-        	<div id="rockChatBar">
-          		<input id="rockchat-input" />
-          		<button id="rockchat-send">Send</button>
-        	</div>
-      	</div>
-
-      	 <div id="#indieChatBox" class='disappear'>
-        	<div id="indieMessages"></div>
-        	<div id="indieChatBar">
-          		<input id="indiechat-input" />
-          		<button id="indiechat-send">Send</button>
-        	</div>
-      	</div>
-
-      	 <div id="#electricChatBox" class='disappear'>
-        	<div id="electricMessages"></div>
-        	<div id="electricChatBar">
-          		<input id="electricchat-input" />
-          		<button id="electricchat-send">Send</button>
-        	</div>
-      	</div>
-
-      	 <div id="#countryChatBox" class='disappear'>
-        	<div id="countryMessages"></div>
-        	<div id="countryChatBar">
-          		<input id="countrychat-input" />
-          		<button id="countrychat-send">Send</button>
-        	</div>
-      	</div>
-
 		</section>
+    </div>
 
+  </div>
 	</body>
 
 

@@ -26,307 +26,260 @@ var rockChatDatabase = database.ref("/rockchat");
 var indieChatDatabase = database.ref("/indiechat");
 var electricChatDatabase = database.ref("/electricchat");
 var countryChatDatabase = database.ref("/countrychat");
-var username;
+var username = 'guest' ;
 var message;
+var current_genre = "";
 
-//on click, if they chose a certain genre, pull chat from that genre
 
-$('#pop').on('click' ,function(){
 
-	$('#popChatBox').removeClass('disappear') //will show the pop chatbox
- 	
- 	if ($("#username").val() !== "") { // if the input is not empty, declare the username
-    	username = $("#username").val();
+$('#enter').on('click', function(){
+
+$('#Messages').empty();
+
+var selectedGenre = $('#username option:selected')[0].value;
+console.log(selectedGenre);
+
+if (selectedGenre === "pop"){
+  
+  localStorage.setItem('genre', 'pop')
+  console.log("pop")
+
+
+}
+
+if (selectedGenre === "rock"){
+  
+  localStorage.setItem('genre', 'rock')
+  console.log("rock")
+
+}
+
+if (selectedGenre === "indie"){
+  
+  localStorage.setItem('genre', 'indie')
+  console.log("indie")
+
+}
+
+if (selectedGenre === "electric"){
+  
+  localStorage.setItem('genre', 'electric')
+  console.log("electric")
+
+}
+
+if (selectedGenre === "country"){
+
+  localStorage.setItem('genre', 'country')
+  console.log("country")
+
+}
+
+
+// continue to work here
+
+console.log($('#username option:selected')[0].value);
+
+
+if(localStorage.getItem("genre") === "pop"){
+  
+  popChatDatabase.orderByChild("time").on("child_added", function(data) {
+  getMessageAppend(data);
+
+  });
+
+}
+
+if(localStorage.getItem("genre") === "rock"){
+    
+  rockChatDatabase.orderByChild("time").on("child_added", function(data) {
+  getMessageAppend(data);
+
+  });
+
+}
+
+if(localStorage.getItem("genre") === "indie"){
+  indieChatDatabase.orderByChild("time").on("child_added", function(data) {
+  getMessageAppend(data);
+
+  });
+
+}
+
+if(localStorage.getItem("genre") === "electric"){
+  electricChatDatabase.orderByChild("time").on("child_added", function(data) {
+  getMessageAppend(data);
+
+  });
+
+}
+
+if(localStorage.getItem("genre") === "country"){
+  countryChatDatabase.orderByChild("time").on("child_added", function(data){
+  getMessageAppend(data);
+
+  });
+
+}
+
+
+
+function getMessageAppend(messageObj){
+
+  console.log(messageObj.val())
+  convertedTime = moment.unix(messageObj.val().time).format('LT')
+  var p = $('<p>')
+  newMessage = messageObj.val().message
+  messageToAppend = p.text(messageObj.val().name + "(" + convertedTime + "): " +  messageObj.val().message);
+  $('#Messages').append( messageToAppend);
+
+}
+
+// send messages to the proper database locations
+
+$("#chat-send").click(function() {
+    if ($("#chat-input").val() !== "") {
+      var message = $("#chat-input").val();
+
+      if(localStorage.getItem("genre") === "pop"){
+
+        popChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+
+      }
+
+      if(localStorage.getItem("genre") === "rock"){
+
+        rockChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+
+      }
+
+      if(localStorage.getItem("genre") === "indie"){
+
+        indieChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+
+      }
+
+      if(localStorage.getItem("genre") === "electric"){
+
+        electricChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+
+      }
+
+      if(localStorage.getItem("genre") === "country"){
+
+        countryChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+
+      }
+
+
     }
 
+    $("#chat-input").val(""); //empty the inputbox
 });
 
-$('#rock').on('click' ,function(){
+$("#chat-input").keypress(function(enter) {
 
-	$('#rockChatBox').removeClass('disappear') //will show the rock chatbox
+    if (enter.keyCode === 13 && $("#chat-input").val() !== "") {
+      var message = $("#chat-input").val();
 
-	if ($("#username").val() !== "") {  // if the input is not empty, declare the username
-    	username = $("#username").val();
+            if(localStorage.getItem("genre") === "pop"){
+
+        popChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+        $("#chat-input").val(""); 
+
+      }
+
+      if(localStorage.getItem("genre") === "rock"){
+
+        rockChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+        $("#chat-input").val(""); 
+      
+      }
+
+      if(localStorage.getItem("genre") === "indie"){
+
+        indieChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+        $("#chat-input").val(""); 
+
+      }
+
+      if(localStorage.getItem("genre") === "electric"){
+
+        electricChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+        $("#chat-input").val(""); 
+
+      }
+
+      if(localStorage.getItem("genre") === "country"){
+
+        countryChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+        $("#chat-input").val(""); 
+
+      }
+    
     }
 
-});
-
-$('#indie').on('click' ,function(){
-
-	$('#indieChatBox').removeClass('disappear') //will show the indie chatbox
-
-	if ($("#username").val() !== "") {  // if the input is not empty, declare the username
-    	username = $("#username").val();
-    }
-
-});
-
-$('#electric').on('click' ,function(){
-
-	$('#electricChatBox').removeClass('disappear') //will show the electric chatbox
-
-	if ($("#username").val() !== "") {  // if the input is not empty, declare the username
-    	username = $("#username").val();
-    }
-
-});
-
-$('#country').on('click' ,function(){
-
-	$('#countryChatBox').removeClass('disappear') //will show the country chatbox
-
-	if ($("#username").val() !== "") {  // if the input is not empty, declare the username                   
-    	username = $("#username").val();
-    }
-
+    
 });
 
 
 
-// start of chat functions // via send button
 
-$("#popchat-send").click(function() { 
-
-  if ($("#popchat-input").val() !== "") { //if the input box is not empty, send the following information to the database
-
-    message = $("#popchat-input").val();
-
-    popChatDatabase.push({
-      name: username,
-      message: message,
-      time: firebase.database.ServerValue.TIMESTAMP,
-      
-    });
-
-    $("#popchat-input").val("");
-  }
-});
-
-
-
-$("#rockchat-send").click(function() { 
-
-  if ($("#rockchat-input").val() !== "") {
-
-    message = $("#rockchat-input").val();
-
-    rockChatDatabase.push({
-      name: username,
-      message: message,
-      time: firebase.database.ServerValue.TIMESTAMP,
-      
-    });
-
-    $("#rockchat-input").val("");
-  }
-});
-
-
-$("#indiechat-send").click(function() { 
-
-  if ($("#indiechat-input").val() !== "") {
-
-    message = $("#indiechat-input").val();
-
-    indieChatDatabase.push({
-      name: username,
-      message: message,
-      time: firebase.database.ServerValue.TIMESTAMP,
-      
-    });
-
-    $("#indiechat-input").val("");
-  }
-});
-
-
-
-$("#electricchat-send").click(function() { 
-
-  if ($("#electricchat-input").val() !== "") {
-
-    message = $("#electricchat-input").val();
-
-    electricChatDatabase.push({
-      name: username,
-      message: message,
-      time: firebase.database.ServerValue.TIMESTAMP,
-      
-    });
-
-    $("#electricchat-input").val("");
-  }
-});
-
-
-$("#countrychat-send").click(function() { 
-
-  if ($("#countrychat-input").val() !== "") {
-
-    message = $("#countrychat-input").val();
-
-    countryChatDatabase.push({
-      name: username,
-      message: message,
-      time: firebase.database.ServerValue.TIMESTAMP,
-      
-    });
-
-    $("#countrychat-input").val("");
-  }
-});
-
-
-// chat function via "enter" key
-
-$("#popchat-input").keypress(function(enter) {
-
-  if (enter.keyCode === 13 && $("#popchat-input").val() !== "" && popChatBox.hasClass('disappear') === false) { //if the chat box does not have the class disappear(therefore it is showing), then push the information into that database
-
-  	message = $("#popchat-input").val();
-
-    popChatDatabase.push({
-      name: username,
-      message: message,
-      time: firebase.database.ServerValue.TIMESTAMP,
-      
-    });
-
-    $("#popchat-input").val("");
-
-  }
 
 
 });
 
-$("#rockchat-input").keypress(function(enter) {
-
-  if (enter.keyCode === 13 && $("#rockchat-input").val() !== "" && rockChatBox.hasClass('disappear') === false) { //if the chat box does not have the class disappear(therefore it is showing), then push the information into that database
-
-  	message = $("#rockchat-input").val();
-
-    rockChatDatabase.push({
-      name: username,
-      message: message,
-      time: firebase.database.ServerValue.TIMESTAMP,
-      
-    });
-
-    $("#rockchat-input").val("");
-
-  }
-
-
-});
-
-
-$("#indiechat-input").keypress(function(enter) {
-
-  if (enter.keyCode === 13 && $("#indiechat-input").val() !== "" && indieChatBox.hasClass('disappear') === false) { //if the chat box does not have the class disappear(therefore it is showing), then push the information into that database
-
-  	message = $("#indiechat-input").val();
-
-    indieChatDatabase.push({
-      name: username,
-      message: message,
-      time: firebase.database.ServerValue.TIMESTAMP,
-      
-    });
-
-    $("#indiechat-input").val("");
-
-  }
-
-
-});
-
-$("#electricchat-input").keypress(function(enter) {
-
-  if (enter.keyCode === 13 && $("#electricchat-input").val() !== "" && electricChatBox.hasClass('disappear') === false) { //if the chat box does not have the class disappear(therefore it is showing), then push the information into that database
-
-  	message = $("#electricchat-input").val();
-
-    electricChatDatabase.push({
-      name: username,
-      message: message,
-      time: firebase.database.ServerValue.TIMESTAMP,
-      
-    });
-
-    $("#electricchat-input").val("");
-
-  }
-
-
-});
-
-$("#countrychat-input").keypress(function(enter) {
-
-  if (enter.keyCode === 13 && $("#countrychat-input").val() !== "" && countryChatBox.hasClass('disappear') === false) { //if the chat box does not have the class disappear(therefore it is showing), then push the information into that database
-
-  	message = $("#countrychat-input").val();
-
-    countryChatDatabase.push({
-      name: username,
-      message: message,
-      time: firebase.database.ServerValue.TIMESTAMP,
-      
-    });
-
-    $("#countrychat-input").val("");
-
-  }
-
-
-});
-
-
-// append message part
-
-popChatDatabase.orderByChild("time").on("child_added", function(popsnapshot) {
-
-$("#popMessages").append("<p popsnapshot.val().name + : "> + popsnapshot.val().message + "</p>");
-
-$("#popMessages").scrollTop($("#popMessages")[0].scrollHeight);
-
- });
-
-
-rockChatDatabase.orderByChild("time").on("child_added", function(rocksnapshot) {
-
-$("#rockMessages").append("<p rocksnapshot.val().name + : "> + rocksnapshot.val().message + "</p>");
-
-$("#rockMessages").scrollTop($("#rockMessages")[0].scrollHeight);
-
- });
-
-
-
-indieChatDatabase.orderByChild("time").on("child_added", function(indiesnapshot) {
-
-$("#indieMessages").append("<p indiesnapshot.val().name + : "> + indiesnapshot.val().message + "</p>");
-
-$("#indieMessages").scrollTop($("#indieMessages")[0].scrollHeight);
-
- });
-
-
-electricChatDatabase.orderByChild("time").on("child_added", function(electricsnapshot) {
-
-$("#electricMessages").append("<p electricsnapshot.val().name + : "> + electricsnapshot.val().message + "</p>");
-
-$("#electricMessages").scrollTop($("#electricMessages")[0].scrollHeight);
-
- });
-
-
-countryChatDatabase.orderByChild("time").on("child_added", function(countrysnapshot) {
-
-$("#countryMessages").append("<p countrysnapshot.val().name + : "> + countrysnapshot.val().message + "</p>");
-
-$("#countryMessages").scrollTop($("#countryMessages")[0].scrollHeight);
-
- });
 
 
 
