@@ -1,0 +1,22 @@
+.panel-title {
+	font-family: 'Shadows Into Light', cursive;
+	text-align: center;
+
+}
+
+body {
+background: url("../images/concert.jpg");
+background-size: 100%
+
+}
+
+.logopic {
+	width: 100px;
+}
+
+.form-control {
+	font-family: 'Shadows Into Light', cursive;
+	
+	
+
+}
