@@ -36,7 +36,7 @@ $('#enter').on('click', function(){
 
 $('#Messages').empty();
 
-var selectedGenre = $('#username option:selected')[0].value;
+var selectedGenre = $('#genreoptions option:selected')[0].value;
 console.log(selectedGenre);
 
 if (selectedGenre === "pop"){
@@ -78,7 +78,7 @@ if (selectedGenre === "country"){
 
 // continue to work here
 
-console.log($('#username option:selected')[0].value);
+console.log($('#genreoptions option:selected')[0].value);
 
 
 if(localStorage.getItem("genre") === "pop"){
@@ -205,6 +205,7 @@ $("#chat-send").click(function() {
 
 $("#chat-input").keypress(function(enter) {
 
+
     if (enter.keyCode === 13 && $("#chat-input").val() !== "") {
       var message = $("#chat-input").val();
 
@@ -228,6 +229,32 @@ $("#chat-input").keypress(function(enter) {
           time: firebase.database.ServerValue.TIMESTAMP,
         });
 
+
+
+    if (enter.keyCode === 13 && $("#chat-input").val() !== "") {
+      var message = $("#chat-input").val();
+
+            if(localStorage.getItem("genre") === "pop"){
+
+        popChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+        $("#chat-input").val(""); 
+
+      }
+
+      if(localStorage.getItem("genre") === "rock"){
+
+        rockChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+
         $("#chat-input").val(""); 
       
       }
@@ -243,6 +270,37 @@ $("#chat-input").keypress(function(enter) {
         $("#chat-input").val(""); 
 
       }
+
+
+      if(localStorage.getItem("genre") === "electric"){
+
+        electricChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+        $("#chat-input").val(""); 
+
+      }
+
+      if(localStorage.getItem("genre") === "country"){
+
+        countryChatDatabase.push({
+          name: username,
+          message: message,
+          time: firebase.database.ServerValue.TIMESTAMP,
+        });
+
+        $("#chat-input").val(""); 
+
+      }
+    
+    }
+
+    
+});
+
 
       if(localStorage.getItem("genre") === "electric"){
 
@@ -275,6 +333,7 @@ $("#chat-input").keypress(function(enter) {
 
 
 
+});
 
 
 
