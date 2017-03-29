@@ -1,88 +1,117 @@
-
-
 <!doctype html>
 <html>
-	<head>
-  <link rel="stylesheet" type="text/css" href="css/index.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet">
-	<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.js"></script>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/icofont.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light" rel="stylesheet"> </head>
 
-	</head>
-	<body>
-    <div class="container body">
-
-
-    <div class="container logo">
-    <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-    <img src="images/potato chips.jpg" class="logopic">
+<body>
+    <div id="login-elements" class="container">
+        <!-- intro section starts -->
+        <section id="intro">
+            <div class="section-intro">
+                <div class="row text-center">
+                    <div class="col-sm-5 col-sm-offset-4"> <img id="logo" src="images/logo.png"> </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <h1 id="app-header">TuneSnack</h1>
+                        <p id="under-heading" class="lead">TuneSnack is your one stop destination for chat with music. Know more people and enjoy your music !</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- intro section ends -->
+        <!-- login section starts -->
+        <section class="login">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 section-login">
+                    <form class="text-center">
+                        <div class="form-group">
+                            <label></label>
+                            <input id="username" class="form-control input-lg" type="text" placeholder="Username"> </div>
+                        <div class="form-group">
+                            <h4 class="text-center" style="color:white">Snack on your favorite Genre</h4> </div>
+                        <!-- Sarah's login work goes here -->
+                        <div class="form-group">
+                            <select class="form-control input-lg" id="genreoptions">
+                                <option id="pop" value="pop">Pop</option>
+                                <option id="rock" value="rock">Rock</option>
+                                <option id="indie" value="indie">Indie</option>
+                                <option id="electric" value="electric">Electric</option>
+                                <option id="country" value="country">Country</option>
+                            </select>
+                            <button id="enter" class="btn btn-lg btn-snack" style="color:white">Start Munching</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- login section ends -->
+    <div id="chat-elements" class="container" style="display:none;">
+        <section>
+            <div class="page-header text-center">
+                <h1 style="color:white;">Welcome To TuneSnack Chatrooms !!</h1> </div>
+        </section>
+        <section>
+            <ul id="channels" class="list-unstyled row text-center">
+                <li class="text-center">
+                    <div class="channel col-sm-2" data-channel="pop"><i class="icofont icofont-music-disk icofont-5x"></i>
+                        <h4>Pop</h4></div>
+                </li>
+                <li class="text-center">
+                    <div class="channel col-sm-2" data-channel="rock"><i class="icofont icofont-music-disk icofont-5x"></i>
+                        <h4>Rock</h4></div>
+                </li>
+                <li class="text-center">
+                    <div class="channel col-sm-2" data-channel="indie"><i class="icofont icofont-music-disk icofont-5x"></i>
+                        <h4>Indie</h4> </div>
+                </li>
+                <li class="text-center">
+                    <div class="channel col-sm-2" data-channel="electric"> <i class="icofont icofont-music-disk icofont-5x"></i>
+                        <h4>Electric</h4></div>
+                </li>
+                <li class="text-center">
+                    <div class="channel col-sm-2" data-channel="country"><i class="icofont icofont-music-disk icofont-5x"></i>
+                        <h4>Country</h4></div>
+                </li>
+            </ul>
+        </section>
+        <section>
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                    <div id="chat-window" class="panel panel-default">
+                        <!-- chat panel -->
+                        <div id="chat-panel" class="panel-body">
+                            <ul id="chat-list" class="list-unstyled"> </ul>
+                        </div>
+                        <!-- chat footer -->
+                        <div class="panel-footer">
+                            <div class="input-group">
+                                <input id="chat-user" type="hidden" />
+                                <input id="chat-input" type="text" class="form-control input-sm chat_input" placeholder="Type your message here..." /> <span class="input-group-btn">
+                                    <button id="chat-send" class="btn btn-sm btn-snack" style="color:white">Munch</button>
+                                </span> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
     </div>
     </div>
-
-    <div class="container loginandpickgenre">
-    <div class="row">
-    <div class="col-md-6 col-md-offset-3">
-
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-      <h3 class="panel-title" style="font-size: 25px">Login</h3>
-      </div>
-      <div class="panel-body">
-        <input id="username" type="text" placeholder="Enter Username" value=""/>
-    <!--Patrick enters login form here-->
-      </div>
-      </div>
-
-    <div class="panel panel-default">
-      <div class="panel-heading">
-      <h3 class="panel-title" style="font-size: 25px">Choose a Genre you want to hear!</h3>
-      </div>
-    <div class="panel-body">
-      <section id="login">
-
-
-    <!-- Sarah's login work goes here -->
-    <select class="form-control" id="genreoptions">
-
-    <option id="pop" value="pop">Pop</option>
-    <option id="rock" value="rock">Rock</option>
-    <option id="indie" value="indie">Indie</option>
-    <option id="electric" value="electric">Electric</option>
-    <option id="country" value="country">Country</option>
-    </select>
-    	<button id="enter"> Enter </button>
-
-      </section>
-    </div>
-    </div>
-    </div>
- 	  </div>
-    </div>
-
-		<div class="container chatbox">
-    <section id="chat">
-		<!-- Ornella's chat work goes here -->
-		 <div id="#ChatBox">
-        	<div id="Messages"></div>
-          <br>
-        	<div id="ChatBar">
-          		<input id="chat-input" />
-          		<button id="chat-send">Send</button>
-        	</div>
-      	</div>
-		</section>
-    </div>
-
-  </div>
-	</body>
-
-
-	<script src="js/chat.js"></script>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
+<script src="js/chat.js"></script>
+<script type="text/javascript">
+    $(window).on("load", function () {
+        setTimeout("$('#login-elements').fadeIn('slow');", 500);
+    });
+</script>
 
 </html>

@@ -1,22 +1,153 @@
-.panel-title {
-	font-family: 'Shadows Into Light', cursive;
-	text-align: center;
-
-}
-
+html,
 body {
-background: url("../images/concert.jpg");
-background-size: 100%
-
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url("../images/musical_bg.jpg") center;
+    background-size: 100%;
+    position: relative;
 }
 
-.logopic {
-	width: 100px;
+.channel h4 {
+    color: white;
 }
 
-.form-control {
-	font-family: 'Shadows Into Light', cursive;
-	
-	
+#greeting {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+}
 
+#enter {
+    margin-left: 10px;
+}
+
+#logo {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    width: 225px;
+    height: 150px;
+}
+
+#app-header {
+    margin-top: 1rem;
+    font-family: 'Shadows Into Light', cursive;
+    font-weight: 700;
+    font-size: 72px;
+    color: white;
+}
+
+.section-login {
+    padding: 20px;
+    /*
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgb(241, 111, 107);
+    border-radius: 6px;
+    box-shadow: 3px 3px 3px #888888;
+*/
+}
+
+#genreoptions {
+    width: 150px;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+#under-heading {
+    color: white;
+}
+
+.btn-snack {
+    transition: 0.3s;
+    background: rgba(87, 23, 88, 0.5);
+    border: 1px solid rgba(255, 255, 255, 1);
+}
+
+.btn-snack:hover,
+.btn-snack:active,
+.btn-snack:focus {
+    transition: 0.3s;
+    color: white;
+    background: rgba(87, 23, 88, 1);
+    border: 1px solid rgba(87, 23, 88, 0);
+}
+
+#team-chat {
+    text-align: center;
+}
+
+#chat-window {
+    /*    position: absolute;*/
+    height: 100%;
+    margin-top: 1rem;
+    padding: 2rem;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(78, 42, 132, 1);
+    border-radius: 6px;
+}
+
+.panel-body {
+    overflow-y: scroll;
+    height: 450px;
+}
+
+.me,
+.others {
+    border-radius: 5px;
+    width: 60%;
+    padding: 2px;
+    margin-top: 0.5rem;
+}
+
+.others {
+    background: white;
+}
+
+.chat-body {
+    margin: 5px;
+    background: rgba(255, 255, 255, 0.8);
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.chat-body:hover,
+.chat-body:active,
+.chat-body:focus {
+    background: rgba(255, 255, 255, 1);
+}
+
+#chat-header {
+    margin-bottom: 3px;
+}
+
+#channels li {
+    display: inline-block;
+}
+
+.channels {
+    margin-top: 3rem;
+}
+
+.channel {}
+
+.channel:hover,
+.channel:active,
+.channel:focus {
+    cursor: pointer;
+}
+
+.icofont {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.icofont:hover {
+    color: rgba(87, 23, 88, 1);
+}
+
+.icofont-chat {
+    color: rgba(87, 23, 88, 1);
+}
+
+.img-circle {
+    width: 50px;
+    height: 50px;
 }
