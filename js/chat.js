@@ -21,46 +21,21 @@ var countryChatDatabase = database.ref("/countrychat");
 var username = 'guest';
 var message;
 var current_genre = "";
-$('#enter').on('click', function (e) {
-    e.preventDefault();
-    setTimeout("$('#login-elements').fadeOut('slow');", 100);
-    setTimeout("$('#chat-elements').fadeIn('slow');", 500);
+var loading_messages = [
+    "You are awsome !!!!"
+    , "Have a wonderful day ahead !!!"
+    , "Life is good !!"
+    , "Work hard and take care of yourself!!"
+]
+var handle_chat = function (selectedGenre) {
     popChatDatabase.off('child_added');
     rockChatDatabase.off('child_added');
     indieChatDatabase.off('child_added');
     electricChatDatabase.off('child_added');
     countryChatDatabase.off('child_added');
-    $('#Messages').empty();
-    setUsername()
-    var selectedGenre = $('#genreoptions option:selected')[0].value;
-    console.log(selectedGenre);
-    if (selectedGenre === "pop") {
-        localStorage.setItem('genre', 'pop');
-        generateRobot();
-        console.log("pop");
-    }
-    if (selectedGenre === "rock") {
-        localStorage.setItem('genre', 'rock');
-        generateRobot();
-        console.log("rock");
-    }
-    if (selectedGenre === "indie") {
-        localStorage.setItem('genre', 'indie');
-        generateRobot();
-        console.log("indie");
-    }
-    if (selectedGenre === "electric") {
-        localStorage.setItem('genre', 'electric');
-        generateRobot();
-        console.log("electric");
-    }
-    if (selectedGenre === "country") {
-        localStorage.setItem('genre', 'country');
-        generateRobot();
-        console.log("country");
-    }
-    // continue to work here
-    console.log($('#genreoptions option:selected')[0].value);
+    $('#chat-list').empty();
+    localStorage.setItem('genre', selectedGenre);
+    generateRobot();
     if (localStorage.getItem("genre") === "pop") {
         popChatDatabase.orderByChild("time").on("child_added", function (data) {
             getMessageAppend(data);
@@ -86,30 +61,44 @@ $('#enter').on('click', function (e) {
             getMessageAppend(data);
         });
     }
+}
+$('#enter').on('click', function (e) {
+    e.preventDefault();
+    setUsername();
+});
+$(".channel").click(function () {
+    handle_chat($(this).attr('data-channel'));
 });
 
 function setUsername() {
-    input = $('#username').val().toString().toLowerCase();
-    usernameDatabase.once('value', function (snapshot) {
-        var users = snapshot.val();
-        for (user in users) {
-            console.log(users[user]);
-            if (users[user].toString().toLowerCase() === input) {
-                alert('try another name');
-                return false;
+    if (localStorage.getItem('username') !== null) { // this function checks if username exist in localstorage
+        username = localStorage.getItem('username') //if it does, set username = to the username stored in localstorage
+        setTimeout("$('#login-elements').fadeOut('slow');", 100);
+        setTimeout("$('#chat-elements').fadeIn('slow');", 500);
+    }
+    else { // if not check if the username already exist in firebase, for uniqueness
+        input = $('#username').val().toString().toLowerCase();
+        usernameDatabase.once('value', function (snapshot) {
+            var users = snapshot.val();
+            for (user in users) {
+                console.log(users[user]);
+                if (users[user].toString().toLowerCase() === input) { //if it does, alert try another name
+                    alert('try another name');
+                    return false
+                }
             }
-            else {
-                usernameDatabase.push(input);
-                localStorage.setItem('username', username);
-                return false;
-            }
-        }
-    });
-    //   localStorage.setItem('username', $('#username').val());
+            alert('push to database') //if it doesnt, it pushes the name to firebase and save the username in localstorage
+            usernameDatabase.push(input)
+            localStorage.setItem('username', input);
+        });
+    }
+    var selectedGenre = $('#genreoptions option:selected')[0].value;
+    handle_chat(selectedGenre);
+    setTimeout("$('#login-elements').fadeOut('slow');", 100);
+    setTimeout("$('#chat-elements').fadeIn('slow');", 500);
 }
 
 function generateRobot() {
-    // username = localstorage.getItem('username')
     var queryURL = 'https://robohash.p.mashape.com/index.php?text=' + username;
     $.ajax({
         url: queryURL, // The URL to the API. You can get this in the API page of the API you intend to consume
@@ -136,21 +125,10 @@ function getMessageAppend(messageObj) {
     var chat_panel = $('#chat-panel');
     var height = chat_panel[0].scrollHeight;
     chat_panel.scrollTop(height);
-    //    console.log(messageObj.val())
-    //    convertedTime = moment(messageObj.val().time).format('LT')
-    //    var newDiv = $('<div>');
-    //    var img = $('<img>')
-    //    img.attr('src', messageObj.val().picture);
-    //    img.attr('width', '50px');
-    //    img.attr('height', '50px');
-    //    $('#Messages').append(newDiv);
-    //    newDiv.append(img);
-    //    newDiv.append(messageObj.val().name);
-    //    newDiv.append("(" + convertedTime + "): ");
-    //    newDiv.append(messageObj.val().message);
 }
 // send messages to the proper database locations
 $("#chat-send").on('click', function () {
+    username = localStorage.getItem('username');
     var imagelink = localStorage.getItem('imageURL');
     if ($("#chat-input").val() !== "") {
         var message = $("#chat-input").val();
@@ -198,6 +176,7 @@ $("#chat-send").on('click', function () {
     $("#chat-input").val(""); //empty the inputbox
 });
 $("#chat-input").keypress(function (enter) {
+    username = localStorage.getItem('username');
     imagelink = localStorage.getItem('imageURL');
     if (enter.keyCode === 13 && $("#chat-input").val() !== "") {
         var message = $("#chat-input").val();

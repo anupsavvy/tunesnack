@@ -10,10 +10,9 @@ body {
     color: white;
 }
 
-#greeting {
+#cool-message {
     position: absolute;
-    top: 40%;
-    left: 40%;
+    color: white;
 }
 
 #enter {
