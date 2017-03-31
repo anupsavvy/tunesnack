@@ -28,7 +28,7 @@
                 <div class="row text-center">
                     <div class="col-sm-6 col-sm-offset-3">
                         <h1 id="app-header">TuneSnack</h1>
-                        <p id="under-heading" class="lead">TuneSnack is your one stop destination for chat with music. Know more people and enjoy your music !</p>
+                        <p id="under-heading" class="lead">TuneSnack is your one stop destination to listen to your favorite tunes and connect with fellow music lovers !</p>
                     </div>
                 </div>
             </div>
@@ -42,15 +42,16 @@
                         <div class="form-group">
                             <label></label>
                             <input id="username" class="form-control input-lg" type="text" placeholder="Username"> </div>
+                        <div id="warning" class="form-group" style="display:none;"> <small style="color:red;" id="warning-message"></small> </div>
                         <div class="form-group">
-                            <h4 class="text-center" style="color:white">Snack on your favorite Genre</h4> </div>
+                            <h4 class="text-center" style="color:white">Snack on your favorite genre</h4> </div>
                         <!-- Sarah's login work goes here -->
                         <div class="form-group">
                             <select class="form-control input-lg" id="genreoptions">
                                 <option id="pop" value="pop">Pop</option>
                                 <option id="rock" value="rock">Rock</option>
                                 <option id="indie" value="indie">Indie</option>
-                                <option id="electric" value="electric">Electric</option>
+                                <option id="electric" value="electric">Electronic</option>
                                 <option id="country" value="country">Country</option>
                             </select>
                             <button id="enter" class="btn btn-lg btn-snack" style="color:white">Start Munching</button>
@@ -64,28 +65,28 @@
     <div id="chat-elements" class="container" style="display:none;">
         <section>
             <div class="page-header text-center">
-                <h1 style="color:white;">Welcome To TuneSnack Chatrooms !!</h1> </div>
+                <h1 style="color:white;">Hi <span id="name"></span> !! Welcome To TuneSnack !!</h1> </div>
         </section>
         <section>
             <ul id="channels" class="list-unstyled row text-center">
                 <li class="text-center">
-                    <div class="channel col-sm-2" data-channel="pop"><i class="icofont icofont-music-disk icofont-5x"></i>
+                    <div class="channel col-sm-2" data-channel="pop"><i id="pop-icon" class="icofont icofont-play-alt-3 icofont-5x"></i>
                         <h4>Pop</h4></div>
                 </li>
                 <li class="text-center">
-                    <div class="channel col-sm-2" data-channel="rock"><i class="icofont icofont-music-disk icofont-5x"></i>
+                    <div class="channel col-sm-2" data-channel="rock"><i id="rock-icon" class="icofont icofont-play-alt-3 icofont-5x"></i>
                         <h4>Rock</h4></div>
                 </li>
                 <li class="text-center">
-                    <div class="channel col-sm-2" data-channel="indie"><i class="icofont icofont-music-disk icofont-5x"></i>
+                    <div class="channel col-sm-2" data-channel="indie"><i id="indie-icon" class="icofont icofont-play-alt-3 icofont-5x"></i>
                         <h4>Indie</h4> </div>
                 </li>
                 <li class="text-center">
-                    <div class="channel col-sm-2" data-channel="electric"> <i class="icofont icofont-music-disk icofont-5x"></i>
-                        <h4>Electric</h4></div>
+                    <div class="channel col-sm-2" data-channel="electric"> <i id="electric-icon" class="icofont icofont-play-alt-3 icofont-5x"></i>
+                        <h4>Electronic</h4></div>
                 </li>
                 <li class="text-center">
-                    <div class="channel col-sm-2" data-channel="country"><i class="icofont icofont-music-disk icofont-5x"></i>
+                    <div class="channel col-sm-2" data-channel="country"><i id="country-icon" class="icofont icofont-play-alt-3 icofont-5x"></i>
                         <h4>Country</h4></div>
                 </li>
             </ul>
@@ -118,49 +119,11 @@
     <script src="https://www.gstatic.com/firebasejs/3.7.3/firebase.js"></script>
     <script src="js/chat.js"></script>
     <script>
-        var play_radio = function (genre) {
-            var station = "";
-            if (genre === 'rock') {
-                station = 'absoluterockradio';
-            }
-            else if (genre === 'indie') {
-                station = 'theindieblend';
-            }
-            else if (genre === 'electric') {
-                station = '-radiopartypl-house-discohouse-progressive-edm';
-            }
-            else if (genre === 'country') {
-                station = '113fmbigkickin-country';
-            }
-            else if (genre === 'pop') {
-                station = 'absoluterockradio';
-            }
-            (function (win, doc, script, source, objectName) {
-                (win.RadionomyPlayerObject = win.RadionomyPlayerObject || []).push(objectName);
-                win[objectName] = win[objectName] || function (k, v) {
-                    (win[objectName].parameters = win[objectName].parameters || {
-                        src: source
-                        , version: '1.1'
-                    })[k] = v;
-                };
-                var js, rjs = doc.getElementsByTagName(script)[0];
-                js = doc.createElement(script);
-                js.async = 1;
-                js.src = source;
-                rjs.parentNode.insertBefore(js, rjs);
-            }(window, document, 'script', 'https://www.radionomy.com/js/radionomy.player.js', 'radplayer'));
-            radplayer('url', station);
-            radplayer('type', 'mobile');
-            radplayer('autoplay', '1');
-            radplayer('volume', '50');
-            radplayer('color1', '#000000');
-            radplayer('color2', '#ffffff');
-        }
         $('.channel').click(function () {
             var genre = $(this).attr('data-channel');
             localStorage.setItem('genre', genre);
-            // refresh the page
-            location.reload();
+            setTimeout("$('#chat-elements').fadeOut('slow');", 250);
+            setTimeout("location.reload();", 500);
         });
     </script>
     <script type="text/javascript">
@@ -169,14 +132,8 @@
                 setTimeout("$('#login-elements').fadeIn('slow');", 500);
             }
             else {
-                var num = Math.floor((Math.random() * 3) + 1);
-                $("#loading-message").html(loading_messages[num]);
-                setTimeout("$('#cool-message').fadeIn('slow');", 500);
-                setTimeout("$('#cool-message').fadeOut('slow');", 2000);
-                setTimeout("$('#chat-elements').fadeIn('slow');", 3000);
-                handle_chat(localStorage.getItem('genre'));
-                setTimeout("play_radio(localStorage.getItem('genre'));", 3000);
-                setTimeout("$('body').find('iframe').css({'height': '0', 'width': '0', 'border': 'none'});", 4000);
+                refresh_chat_room(localStorage.getItem('genre'));
+                //                var icon = "#" + localStorage.getItem('genre') + '-icon'; // var num = Math.floor((Math.random() * 5) + 1); // $("#loading-message").html(loading_messages[num]); // setTimeout("$('#cool-message').fadeIn('slow');", 500); // setTimeout("$('#cool-message').fadeOut('slow');", 2000); // setTimeout("$('#chat-elements').fadeIn('slow');", 2000); // $(icon).removeClass('icofont-play-alt-3'); // $(icon).addClass('icofont-song-notes'); // handle_chat(localStorage.getItem('genre')); // setTimeout("play_radio(localStorage.getItem('genre'));", 3000); // setTimeout("$('body').find('iframe').css({'height': '0', 'width': '0', 'border': 'none'});", 4000);
             }
         });
     </script>
