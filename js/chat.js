@@ -74,7 +74,6 @@ var handle_chat = function (selectedGenre) {
     electricChatDatabase.off('child_added');
     countryChatDatabase.off('child_added');
     $('#chat-list').empty();
-    localStorage.setItem('genre', selectedGenre);
     generateRobot();
     if (localStorage.getItem("genre") === "pop") {
         popChatDatabase.orderByChild("time").on("child_added", function (data) {
@@ -102,67 +101,62 @@ var handle_chat = function (selectedGenre) {
         });
     }
 }
-$('#enter').on('click', function (e) {
-    e.preventDefault();
-    $("#warning").fadeOut('slow');
-    setUsername();
-});
 $(".channel").click(function () {
     handle_chat($(this).attr('data-channel'));
 });
 var refresh_chat_room = function (genre) {
+    console.log("refresing");
     var icon = "#" + localStorage.getItem('genre') + '-icon';
     var num = Math.floor((Math.random() * 5) + 1);
     $("#loading-message").html(loading_messages[num]);
     setTimeout("$('#cool-message').fadeIn('slow');", 500);
-    setTimeout("$('#cool-message').fadeOut('slow');", 1000);
+    setTimeout("$('#cool-message').fadeOut('slow');", 1500);
     setTimeout("$('#chat-elements').fadeIn('slow');", 2000);
     $("#name").html(localStorage.getItem('username'));
     $(icon).removeClass('icofont-play-alt-3');
     $(icon).addClass('icofont-song-notes');
-    //    handle_chat(localStorage.getItem('genre'));
     handle_chat(genre);
     setTimeout("play_radio(localStorage.getItem('genre'));", 3000);
     setTimeout("$('body').find('iframe').css({'height': '0', 'width': '0', 'border': 'none'});", 4000);
 }
 
 function setUsername() {
-    var login = false;
-    if (localStorage.getItem('username') !== null) { // this function checks if username exist in localstorage
-        username = localStorage.getItem('username') //if it does, set username = to the username stored in localstorage
-        setTimeout("$('#login-elements').fadeOut('slow');", 100);
-        setTimeout("$('#chat-elements').fadeIn('slow');", 500);
-        login = true;
-    }
-    else { // if not check if the username already exist in firebase, for uniqueness
-        input = $('#username').val().toString().toLowerCase();
-        usernameDatabase.once('value', function (snapshot) {
-            var users = snapshot.val();
-            for (user in users) {
-                console.log(users[user]);
-                if (users[user].toString().toLowerCase() === input) { //if it does, alert try another name
-                    $("#warning").fadeIn('slow');
-                    setTimeout("$('#warning-message').html('This username has already been taken.Try a new name.')", 100);
-                    return false;
-                }
-                else if (input === "") {
-                    $("#warning").fadeIn('slow');
-                    setTimeout("$('#warning-message').html('Username cannot be blank.')", 100);
-                    return false;
-                }
+    
+// if not check if the username already exist in firebase, for uniqueness
+    input = $('#username').val().toString().toLowerCase();
+    usernameDatabase.once('value', function (snapshot) {
+        var users = snapshot.val();
+        for (user in users) {
+            console.log(users[user]);
+            if (users[user].toString().toLowerCase() === input) { //if it does, alert try another name
+                $("#warning").fadeIn('slow');
+                setTimeout("$('#warning-message').html('This username has already been taken.Try a new name.')", 100);
+                return false;
             }
-            usernameDatabase.push(input)
-            localStorage.setItem('username', input);
-            login = true;
-        });
-    }
-    if (login === true) {
+            else if (input === "") {
+                $("#warning").fadeIn('slow');
+                setTimeout("$('#warning-message').html('Username cannot be blank.')", 100);
+                return false;
+            }
+        }
+        usernameDatabase.push(input)
+        localStorage.setItem('username', input);
+        console.log("new name pushed into firebase and stored locally");
+        username = localStorage.getItem('username'); 
         var selectedGenre = $('#genreoptions option:selected')[0].value;
+        localStorage.setItem('genre', selectedGenre);
         setTimeout("$('#login-elements').fadeOut('slow');", 100);
-        //        setTimeout("$('#chat-elements').fadeIn('slow');", 500);
+        console.log("about to refresh the chat room");
         refresh_chat_room(selectedGenre);
-    }
+    });
+    
 }
+
+$('#enter').on('click', function (e) {
+    e.preventDefault();
+    $("#warning").fadeOut('slow');
+    setUsername();
+});
 
 function generateRobot() {
     var queryURL = 'https://robohash.p.mashape.com/index.php?text=' + username;
